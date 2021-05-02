@@ -1,9 +1,20 @@
 require "socket"
 
-udp = UDPSocket.open()
+@udp = UDPSocket.open
 
-sockaddr = Socket.pack_sockaddr_in(10000, "127.0.0.1")
+def send1
+  sockaddr = Socket.pack_sockaddr_in(10000, "18.180.200.17")
+  @udp.send("HELLO", 0, sockaddr)
+end
 
-udp.send("HELLO", 0, sockaddr)
+def send2
+  @udp.connect("18.180.200.17", 10000)
+  @udp.send("HELLO", 0) # connect が必要みたい
+end
 
-udp.close
+def send3
+  @udp.send("HELLO", 0, "18.180.200.17", 10000)
+end
+
+send3
+@udp.close
